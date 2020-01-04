@@ -11,10 +11,11 @@ load("../methylation/environment/prcc/test_common_ind.RData") ##Test index withi
 setwd("../../IGAMS/")
 
 ##Extracting methylation features
+meth.req.data <- meth.req.data[1:100,]
 meth.fea.ob <- get.meth.fea(train.data = t(logit2(meth.req.data[, train.common.index])), train.stages = comb.stage[train.common.index],
              train.ind.list = list(seq(length(train.common.index))), cores = 4,
              type = 2, min.genes = 2, min.range = 0.02)
-meth.fea <- get.class.fea(meth.fea)
+meth.fea.list <- get.class.fea(meth.fea.ob)
 save(meth.fea.ob, file = "environment/methylation/meth_fea_ob.RData")
 save(meth.fea.list, file = "environment/methylation/meth_fea_list.RData")
 

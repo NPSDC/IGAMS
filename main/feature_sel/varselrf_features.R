@@ -1,6 +1,7 @@
 #library(varSelRF)
 library(foreach)
 library(doParallel)
+source("main/feature_sel/varSelRf_altered.R")
 
 #' Gets the varself object w.r.t each group
 #' 
