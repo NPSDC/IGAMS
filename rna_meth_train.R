@@ -24,7 +24,7 @@ int.res <- simple.integrate.t(train.data.list = list(vst.rna.req[train.common.in
 
 registerDoSEQ()
 save(int.res, file = "environment/integration/int_res.RData")
-gr <- build.groups(stages = comb.stage[train.common.ind], num.group = 5, strat = T)
+gr <- build.groups(stages = comb.stage[train.common.index], num.group = 5, strat = T)
 
 tr.rna.meth.gr <- list()
 tr.rna.meth.gr[["shrunken"]] <- list()
@@ -35,7 +35,7 @@ tr.rna.meth.gr[["varSelRF"]][["atleast_1"]] <- train.group.lasso.trial(train.dat
                                                                             test.data.list = list(vst.rna.req[test.common.index,],
                                                                                                   t(logit2(meth.req.data[,test.common.index]))), 
                                                                             stages.train = comb.stage[train.common.index], stages.test = comb.stage[test.common.index], 
-                                                                            features.list = list(list("f" = rna.fea.list$varSelRF$atleast_1), 
+                                                                            features.list = list(list("f" = rna.fea$varSelRF$atleast_1), 
                                                                                                  list("v" = meth.fea.list$varSelRF$atleast_1)),
                                                                             cv.costs.res = NULL, costs = C_set, kern.func.list = kernels, 
                                                                             kern.hash = kernels.hash.table, kern.ind.list = k.gr, params = parameters,
