@@ -1,28 +1,27 @@
 source("integration/integrate.R")
 source("integration/load_basic.R")
 library(minfi)
-registerDoParallel(cores = 4)
+
 setwd("../Stage-Prediction-of-Cancer/Organised/")
 load("../methylation/environment/prcc/req_meth.RData") ##data.frame of methylation CpGs probess for the 250 samples common to RNASeq and methylation
+load("../methylation/environment/prcc/comb_stages.RData") ##Stage information for the samples
 load("../methylation/environment/prcc/train_common_ind.RData") ##Training index within 250 samples
 load("../methylation/environment/prcc/test_common_ind.RData") ##Test index within the 250 samples
 load("../methylation/environment/prcc/meth_fea_list.RData") ##Methylation features
-
-load("environment/prcc/vst_rna_meth_common.RData")
-load("environment/prcc/rna_fea.RData")
+load("environment/prcc/vst_rna_meth_common.RData") ##VST normalised RNASeq Data
+load("environment/prcc/rna_fea.RData") ##RNASeq features
 setwd("../../IGAMS/")
 
-meth.req.data <- meth.req.data[1:100,]
-vst.rna.req <- vst.rna.req[,1:100]
-int.res <- foreach(i=1:4) %dopar%
-{
-    simple.integrate.t(train.data.list = list(vst.rna.req[train.common.index,], t(logit2(meth.req.data[,train.common.index]))),
+meth.req.data <- meth.req.data[unique(unlist(meth.fea.list)),]
+vst.rna.req <- vst.rna.req[,unique(unlist(rna.fea))]
+gc()
+int.res <- simple.integrate.t(train.data.list = list(vst.rna.req[train.common.index,], t(logit2(meth.req.data[,train.common.index]))),
                            test.data.list = list(vst.rna.req[test.common.index,], t(logit2(meth.req.data[,test.common.index]))),
                            fea.list = list(list("varGene" = rna.fea$varSelRF$atleast_1), 
                                            list("varMeth" = meth.fea.list$varSelRF$atleast_1)),
                            stages = list('train' = comb.stage[train.common.index], 'test' = comb.stage[test.common.index]),
                            n.trees = n.trees, C_set = C_set, scale = c(T,T), cores = 2, cv = F)
-}
+
 registerDoSEQ()
 save(int.res, file = "environment/integration/int_res.RData")
 gr <- build.groups(stages = comb.stage[train.common.ind], num.group = 5, strat = T)
