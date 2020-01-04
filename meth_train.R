@@ -40,7 +40,7 @@ save(pap.meth.test.pred, file = "environment/methylation/pap_meth_test_pred.RDat
 
 ##Evaluating models on test data
 pap.meth.test.res <- get.test.res(stages.test = comb.stage[test.common.index], test.pred = pap.meth.test.pred)
-save(pap.meth.test.pred, file = "environment/methylation/pap_meth_test_res.RData")
+save(pap.meth.test.res, file = "environment/methylation/pap_meth_test_res.RData")
 
 ##MKL
 gr <- build.groups(stages = comb.stage[train.common.index], num.group = 5, strat = T) 
