@@ -1,9 +1,9 @@
-source('../methylation/helper_func.R')
-source('build_models.R')
-source('CV/cv_models.R')
-source('predict_models.R')
-source('get_results.R')
-source('get_eval_mat.R')
+source('main/meth_helper.R')
+source('main/build_models.R')
+source('main/CV/cv_models.R')
+source('main/predict_models.R')
+source('main/get_results.R')
+source('main/get_eval_mat.R')
 
 #' Combines the features of mRNA and methylation
 

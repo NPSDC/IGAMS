@@ -1,5 +1,5 @@
-source("../integration/integrate.R")
-source("../integration/load_basic.R")
+source("integration/integrate.R")
+source("integration/load_basic.R")
 library(minfi)
 registerDoParallel(cores = 4)
 setwd("../Stage-Prediction-of-Cancer/Organised/")

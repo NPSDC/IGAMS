@@ -25,8 +25,8 @@ pap.meth.train.model <- get.train.model(tr.data = t(logit2(meth.req.data[,train.
 save(pap.meth.train.model, file = "environment/methylation/pap_meth_train_model.RData")
 
 ##Cross Validation
-pap.meth.cv.model[[i]] <- get.cv.model(tr.data = t(logit2(meth.req.data[,train.common.index])), 
-                               fea.list = meth.fea.list[[i]], folds = 5,
+pap.meth.cv.model <- get.cv.model(tr.data = t(logit2(meth.req.data[,train.common.index])), 
+                               fea.list = meth.fea.list, folds = 5,
                                stages.train = comb.stage[train.common.index],
                                tr.model = pap.meth.train.model, cores = 4)
 save(pap.meth.cv.model, file = "environment/methylation/pap_meth_cv_model.RData")
@@ -53,7 +53,7 @@ tr.gr.lasso[["varSelRF"]] <- list()
 tr.gr.lasso[["varSelRF"]][["atleast_1"]] <- train.group.lasso.trial(train.data.list = list(t(logit2(meth.req.data[,train.common.index]))), 
                                             test.data.list = list(t(logit2(meth.req.data[,test.common.index]))), 
                                             stages.train = comb.stage[train.common.index], stages.test = comb.stage[test.common.index], 
-                                            features.list = list(list("f" = meth.fea.list[[i]]$varSelRF$atleast_1)),
+                                            features.list = list(list("f" = meth.fea.list$varSelRF$atleast_1)),
                                             cv.costs.res = NULL, costs = C_set, kern.func.list = kernels, 
                                             kern.hash = kernels.hash.table, kern.ind.list = k.gr, params = parameters, folds = 5, 
                                             gr.list = list(gr), n = 1, unit.norm = T, cores = 4)
