@@ -2,15 +2,15 @@ source("integration/integrate.R")
 source("integration/load_basic.R")
 library(minfi)
 
-setwd("../Stage-Prediction-of-Cancer/Organised/")
-load("../methylation/environment/prcc/req_meth.RData") ##data.frame of methylation CpGs probess for the 250 samples common to RNASeq and methylation
-load("../methylation/environment/prcc/comb_stages.RData") ##Stage information for the samples
-load("../methylation/environment/prcc/train_common_ind.RData") ##Training index within 250 samples
-load("../methylation/environment/prcc/test_common_ind.RData") ##Test index within the 250 samples
-load("../methylation/environment/prcc/meth_fea_list.RData") ##Methylation features
-load("environment/prcc/vst_rna_meth_common.RData") ##VST normalised RNASeq Data
-load("environment/prcc/rna_fea.RData") ##RNASeq features
-setwd("../../IGAMS/")
+
+load("environment/methylation/req_meth.RData") ##data.frame of methylation CpGs probess for the 250 samples common to RNASeq and methylation
+load("environment/methylation/comb_stages.RData") ##Stage information for the samples
+load("environment/methylation/train_common_ind.RData") ##Training index within 250 samples
+load("environment/methylation/test_common_ind.RData") ##Test index within the 250 samples
+load("environment/methylation/meth_fea_list.RData") ##Methylation features
+load("environment/rnaseq/vst_rna_meth_common.RData") ##VST normalised RNASeq Data
+load("environment/rnaseq/rna_fea.RData") ##RNASeq features
+
 
 meth.req.data <- meth.req.data[unique(unlist(meth.fea.list)),]
 vst.rna.req <- vst.rna.req[,unique(unlist(rna.fea))]

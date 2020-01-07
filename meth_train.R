@@ -3,12 +3,12 @@ source("main/build_models.R")
 source("integration/load_basic.R")
 source("integration/kernel_init.R")
 
-setwd("../Stage-Prediction-of-Cancer/Organised/")
-load("../methylation/environment/prcc/req_meth.RData") ##data.frame of methylation CpGs probess for the 250 samples common to RNASeq and methylation
-load("../methylation/environment/prcc/comb_stages.RData") ##Stage information for the samples
-load("../methylation/environment/prcc/train_common_ind.RData") ##Training index within 250 samples
-load("../methylation/environment/prcc/test_common_ind.RData") ##Test index within the 250 samples
-setwd("../../IGAMS/")
+
+load("environment/methylation/req_meth.RData") ##data.frame of methylation CpGs probess for the 250 samples common to RNASeq and methylation
+load("environment/methylation/comb_stages.RData") ##Stage information for the samples
+load("environment/methylation/train_common_ind.RData") ##Training index within 250 samples
+load("environment/methylation/test_common_ind.RData") ##Test index within the 250 samples
+
 
 ##Extracting methylation features
 meth.req.data <- meth.req.data[1:100,]
