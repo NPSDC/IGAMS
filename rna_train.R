@@ -12,13 +12,13 @@ load("../methylation/environment/prcc/test_common_ind.RData") ##Test index withi
 setwd("../../IGAMS/")
 
 ##Training methylation model
-pap.rna.train.model <- get.train.model(tr.data = vst.rna.req[train.common.index,], fea.list = rna.fe, 
+pap.rna.train.model <- get.train.model(tr.data = vst.rna.req[train.common.index,], fea.list = rna.fea, 
                                         stages.train = comb.stage[train.common.index], C_set = C_set, n.trees = n.trees, cores = 4)
 save(pap.rna.train.model, file = "environment/rnaseq/pap_rna_train_model.RData")
 
 ##Cross Validation
 pap.rna.cv.model <- get.cv.model(tr.data = vst.rna.req[train.common.index,], 
-                                  fea.list = rna.fe, folds = 5,
+                                  fea.list = rna.fea, folds = 5,
                                   stages.train = comb.stage[train.common.index],
                                   tr.model = pap.rna.train.model, cores = 4)
 save(pap.rna.cv.model, file = "environment/rnaseq/pap_rna_cv_model.RData")
@@ -26,7 +26,7 @@ save(pap.rna.cv.model, file = "environment/rnaseq/pap_rna_cv_model.RData")
 ##Predicting test stages
 pap.rna.test.pred <- get.test.pred(tr.data = vst.rna.req[train.common.index,], 
                                     te.data = vst.rna.req[test.common.index,],
-                                    fea.list = rna.fe, stages.tr = comb.stage[train.common.index],
+                                    fea.list = rna.fea, stages.tr = comb.stage[train.common.index],
                                     tr.model = pap.rna.train.model, cv.model = pap.rna.cv.model, cores = 4)
 save(pap.rna.test.pred, file = "environment/rnaseq/pap_rna_test_pred.RData")
 
@@ -37,10 +37,10 @@ save(pap.rna.test.res, file = "environment/rnaseq/pap_rna_test_res.RData")
 gr <- build.groups(stages = comb.stage[train.common.index], num.group = 5, strat = T) 
 
 ##Group Lasso
-tr.gr.lasso <- list()
-tr.gr.lasso[["varSelRF"]] <- list()
+tr.rna.gr.lasso <- list()
+tr.rna.gr.lasso[["varSelRF"]] <- list()
 
-tr.gr.lasso[["varSelRF"]][["atleast_1"]] <- train.group.lasso.trial(train.data.list = list(vst.rna.req[train.common.index,]), 
+tr.rna.gr.lasso[["varSelRF"]][["atleast_1"]] <- train.group.lasso.trial(train.data.list = list(vst.rna.req[train.common.index,]), 
                                                                     test.data.list = list(vst.rna.req[test.common.index,]), 
                                                                     stages.train = comb.stage[train.common.index], stages.test = comb.stage[test.common.index], 
                                                                     features.list = list(list("f" = rna.fea$varSelRF$atleast_1)),
@@ -51,10 +51,10 @@ tr.gr.lasso[["varSelRF"]][["atleast_1"]] <- train.group.lasso.trial(train.data.l
 save(tr.rna.gr.lasso, file = "environment/rnaseq/tr_rna_gr_lasso.RData")
 
 ##BEMKL
-tr.bemkl <- list()
-tr.bemkl[["varSelRF"]] <- list()
+tr.rna.bemkl <- list()
+tr.rna.bemkl[["varSelRF"]] <- list()
 
-tr.bemkl[["varSelRF"]][["atleast_1"]] <- train.bemkl.trial(train.data.list = list(vst.rna.req[train.common.index,]), 
+tr.rna.bemkl[["varSelRF"]][["atleast_1"]] <- train.bemkl.trial(train.data.list = list(vst.rna.req[train.common.index,]), 
                                                            test.data.list = list(vst.rna.req[test.common.index,]), 
                                                            stages.train = comb.stage[train.common.index], stages.test = comb.stage[test.common.index], 
                                                            features.list = list(list("f" = rna.fea$varSelRF$atleast_1)),
