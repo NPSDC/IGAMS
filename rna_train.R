@@ -3,13 +3,12 @@ source("main/build_models.R")
 source("integration/load_basic.R")
 source("integration/kernel_init.R")
 
-setwd("../Stage-Prediction-of-Cancer/Organised/")
-load("environment/prcc/vst_rna_meth_common.RData")
-load("environment/prcc/rna_fea.RData")
-load("../methylation/environment/prcc/comb_stages.RData") ##Stage information for the samples
-load("../methylation/environment/prcc/train_common_ind.RData") ##Training index within 250 samples
-load("../methylation/environment/prcc/test_common_ind.RData") ##Test index within the 250 samples
-setwd("../../IGAMS/")
+load("environment/rnaseq/vst_rna_meth_common.RData")
+load("environment/rnaseq/rna_fea.RData")
+load("environment/methylation/comb_stages.RData") ##Stage information for the samples
+load("environment/methylation/train_common_ind.RData") ##Training index within 250 samples
+load("environment/methylation/test_common_ind.RData") ##Test index within the 250 samples
+
 
 ##Training methylation model
 pap.rna.train.model <- get.train.model(tr.data = vst.rna.req[train.common.index,], fea.list = rna.fea, 
