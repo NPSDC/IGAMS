@@ -4,13 +4,13 @@ source("integration/load_basic.R")
 source("integration/kernel_init.R")
 
 load("environment/rnaseq/vst_rna_meth_common.RData")
-load("environment/rnaseq/rna_fea.RData")
-load("environment/methylation/comb_stages.RData") ##Stage information for the samples
-load("environment/methylation/train_common_ind.RData") ##Training index within 250 samples
-load("environment/methylation/test_common_ind.RData") ##Test index within the 250 samples
+load("environment/rnaseq/rna_fea.RData") ##(List of list of features extracted through the training algorithm)
+load("environment/methylation/comb_stages.RData") ##Stage information for the samples (a Vector)
+load("environment/methylation/train_common_ind.RData") ##Training index within 250 samples (a Vector)
+load("environment/methylation/test_common_ind.RData") ##Test index within the 250 samples (a Vector)
 
 
-##Training methylation model
+##Training RNASeq model
 pap.rna.train.model <- get.train.model(tr.data = vst.rna.req[train.common.index,], fea.list = rna.fea, 
                                         stages.train = comb.stage[train.common.index], C_set = C_set, n.trees = n.trees, cores = 4)
 save(pap.rna.train.model, file = "environment/rnaseq/pap_rna_train_model.RData")
